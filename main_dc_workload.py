@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import numpy as np
-from models.lstm import LSTM
+from backbones.lstm import LSTM
 from torch.utils.data import DataLoader, TensorDataset
 from utils.dc_dataloader import read_data
 from utils.dc_workload_scheduler import calculate_action_in_cuda, calculate_cost_in_cuda, read_demand_data, cal_wass_distance
@@ -78,7 +78,7 @@ def cost_group_loss(output, labels, lbda, demands, q):
 
 
 if __name__ == '__main__':
-    parser = ArgumentParser(description='datacenter-app-build-public-models')
+    parser = ArgumentParser(description='datacenter-app-build-public-backbones')
     args = add_general_args(parser)
 
     N = 50
@@ -146,7 +146,7 @@ if __name__ == '__main__':
                 else:
                     print(f'Iter: {epoch}, Cost: {loss.item()}')
 
-    # Uncomment below and modify the path when training your own public models for saving
+    # Uncomment below and modify the path when training your own public backbones for saving
     # path = "./trained_models/my_model.pth"
     # torch.save(model.state_dict(), path)
 
@@ -155,8 +155,8 @@ if __name__ == '__main__':
     true_cost_list_groups = []
     pred_cost_list_groups = []
     if not args.training:
-        model.load_state_dict(torch.load(args.model_path)) # load trained models
-        model.load_state_dict(torch.load(args.model_path)) # load trained models
+        model.load_state_dict(torch.load(args.model_path)) # load trained backbones
+        model.load_state_dict(torch.load(args.model_path)) # load trained backbones
 
     mse_list = []
     model.eval()

@@ -7,7 +7,7 @@ from datetime import datetime
 from argparse import ArgumentParser
 from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import DataLoader, TensorDataset
-from models.transformer_multistep import TransAm
+from backbones.transformer_multistep import TransAm
 from utils.ev_scheduler import read_demand_data, read_charging_per_unit_data, cal_wass_distance
 from utils.add_params import add_general_args
 from utils.dc_dataloader import load_carbon, load_indirect_WUE, load_direct_WUE
@@ -180,7 +180,7 @@ def get_cwp_from_PM(test_data):
 
 
 if __name__ == '__main__':
-    parser = ArgumentParser(description='datacenter-app-build-public-models')
+    parser = ArgumentParser(description='datacenter-app-build-public-backbones')
     args = add_general_args(parser)
 
     seq_length = 12
@@ -274,7 +274,7 @@ if __name__ == '__main__':
                 else:
                     print(f'Iter: {epoch}, Cost: {loss.item()}')
 
-    # Uncomment below and modify the path when training your own public models for saving
+    # Uncomment below and modify the path when training your own public backbones for saving
     # path = "./trained_models/my_model.pth"
     # torch.save(model.state_dict(), path)
 
