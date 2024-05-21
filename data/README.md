@@ -1,4 +1,4 @@
-### Download Other Datasets
+### Download Datasets
 
 #### Weather Data
 - **Source:** [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/request/download.phtml)
