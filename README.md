@@ -44,22 +44,21 @@ sh run_public_models.sh
 ### Train Your Own Public Models
 * For the Data Center Workload application, here are example training commands:
 ```
-# Data Center Workload 
-## Train an equitable model with different lambda, similar groups
+# Train an equitable model with different lambda, similar groups
 python main_dc_workload.py --training --lr 0.05 --n_epochs 50 --batch_size 128 --diff_lambda --q_idx 1.5
 
-## Train an equitable model with same lambda, similar groups
+# Train an equitable model with same lambda, similar groups
 python main_dc_workload.py --training --lr 0.05 --n_epochs 50 --batch_size 128 --q_idx 1.1
 
-## Train a baseline model with different lambda, different groups
+# Train a baseline model with different lambda, different groups
 python main_dc_workload.py --training --lr 0.05 --n_epochs 100 --batch_size 128 --diff_lambda --baseline --diff_group_dist
 ```
 * For the EV Charging application, here are example training commands:
 ```
-## Train an equitable model with similar groups
+# Train an equitable model with similar groups
 python -m pdb main_ev_charging.py --training --lr 1e-4 --n_epochs 50 --batch_size 128 --q_idx 30
 
-## Train a baseline model with different groups
+# Train a baseline model with different groups
 python -m pdb main_ev_charging.py --training --lr 1e-4 --n_epochs 100 --batch_size 128 --diff_group_dist
 ```
 ### Visualization
