@@ -8,7 +8,7 @@ Yejia Liu, Jianyi Yang, Pengfei Li, Tongxin Li, Shaolei Ren<br>
 The Forty-first International Conference on Machine Learning (ICML 2024)
 
 
-[[arXiv](https://github.com/Ren-Research/Socially-Equitable-Public-Models)][[GitHub](https://github.com/Ren-Research/Socially-Equitable-Public-Models)]
+[//]: # ([[arXiv]&#40;https://github.com/Ren-Research/Socially-Equitable-Public-Models&#41;][[GitHub]&#40;https://github.com/Ren-Research/Socially-Equitable-Public-Models&#41;])
 
 ## Installation
 1. Create and activate a local conda environment:
