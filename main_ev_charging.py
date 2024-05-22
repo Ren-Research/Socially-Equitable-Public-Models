@@ -179,6 +179,7 @@ if __name__ == '__main__':
     num_time_steps_to_predict = 12
     N = 70
     trainset_ratio = 0.7
+    Batch_Size = args.batch_size
 
     carbon_data = read_data_carbon()
     water_data = read_data_water()
@@ -193,11 +194,9 @@ if __name__ == '__main__':
     train_X = torch.from_numpy(train_X)
     train_y = torch.from_numpy(train_y)
 
-    Batch_Size = args.batch_size
     train_dataset = TensorDataset(train_X, train_y)
     train_loader = DataLoader(train_dataset, batch_size=Batch_Size, shuffle=False)
 
-    # process ev_data
     total_ev_data = pd.read_csv("./data/caltech_ev_dataset_detail.csv")
     candidate_ev_data = preprocess_ev_charging_data(total_ev_data)
     dataset_size = min(len(cwp_data), len(total_ev_data))
@@ -219,7 +218,6 @@ if __name__ == '__main__':
     for n in range(0, N):
         assert len(sub_groups_charging_per_sec_test[n]) == len(sub_groups_demand_test[n])
 
-    # get charging time windows
     charging_time_window = pd.read_csv("./data/trippub.csv")
     time_window, _ = get_charging_time_window(charging_time_window)
 
@@ -266,7 +264,7 @@ if __name__ == '__main__':
                 else:
                     print(f'Iter: {epoch}, Cost: {loss.item()}')
 
-    # Uncomment below and modify the path when training your own public backbones for saving
+    # Uncomment below and modify the path when training your own public models to save
     # path = "./trained_models/my_model.pth"
     # torch.save(model.state_dict(), path)
 

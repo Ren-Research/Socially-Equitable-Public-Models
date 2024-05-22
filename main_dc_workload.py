@@ -146,7 +146,7 @@ if __name__ == '__main__':
                 else:
                     print(f'Iter: {epoch}, Cost: {loss.item()}')
 
-    # Uncomment below and modify the path when training your own public backbones for saving
+    # Uncomment below and modify the path when training your own public models to save
     # path = "./trained_models/my_model.pth"
     # torch.save(model.state_dict(), path)
 
