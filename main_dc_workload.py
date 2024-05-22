@@ -91,10 +91,10 @@ if __name__ == '__main__':
 
     normed_carbon_data = read_data() # carbon_data
     if not args.diff_group_dist:
-        sub_groups_demand_train, sub_groups_demand_test = read_demand_data("../data/azure_total_demand.csv", N)
+        sub_groups_demand_train, sub_groups_demand_test = read_demand_data("./data/azure_total_demand.csv", N)
     else:
-        sub_groups_demand_train, sub_groups_demand_test = np.load('dc_demands_sub_groups_train_dist.npy', allow_pickle=True), \
-                                                          np.load('dc_demands_sub_groups_test_dist.npy', allow_pickle=True)
+        sub_groups_demand_train, sub_groups_demand_test = np.load('./data/dc_demands_sub_groups_train_dist.npy', allow_pickle=True), \
+                                                          np.load('./data/dc_demands_sub_groups_test_dist.npy', allow_pickle=True)
 
     # split train and test subgroups
     val_data = []
@@ -155,7 +155,6 @@ if __name__ == '__main__':
     true_cost_list_groups = []
     pred_cost_list_groups = []
     if not args.training:
-        model.load_state_dict(torch.load(args.model_path)) # load trained backbones
         model.load_state_dict(torch.load(args.model_path)) # load trained backbones
 
     mse_list = []

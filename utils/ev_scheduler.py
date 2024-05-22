@@ -3,13 +3,7 @@ import torch
 import pandas as pd
 import math
 from scipy.stats import wasserstein_distance
-from utils.dc_dataloader import load_carbon, load_indirect_WUE, load_direct_WUE
-from sklearn.preprocessing import MinMaxScaler
 
-
-# Batch_Size = 128
-# trainset_size = int(8759*0.7)
-# testset_size = 8759 - trainset_size
 def calculate_resource(demand_list, predicted_carbon, lbda):
     res_list=[]
     cost_list =[]
@@ -29,7 +23,7 @@ def calculate_resource(demand_list, predicted_carbon, lbda):
     return res_list, cost_list
 
 def get_total_demand(ev_data):
-    demands = ev_data['total_power']  # .drop("Unnamed: 0", axis=1)
+    demands = ev_data['total_power']
     return demands
 
 def get_total_charging_per_unit(ev_data):
@@ -40,8 +34,8 @@ def get_total_charging_per_unit(ev_data):
 
 def read_demand_data(ev_data, N, trainset_size):
     demands = ev_data['total_power']
-    demands_train = demands[:trainset_size]  # trainset size
-    demands_test = demands[trainset_size:]  # testset size
+    demands_train = demands[:trainset_size]
+    demands_test = demands[trainset_size:]
 
     demands_groups_train = np.array_split(demands_train, N)
     demands_groups_test = np.array_split(demands_test, N)
@@ -49,8 +43,8 @@ def read_demand_data(ev_data, N, trainset_size):
 
 def read_charging_per_unit_data(ev_data, N, trainset_size):
     charging_per_second, duration_seconds = get_total_charging_per_unit(ev_data)
-    charging_per_unit_train = charging_per_second[:trainset_size]  # trainset size
-    charging_per_unit_test = charging_per_second[trainset_size:]  # testset size
+    charging_per_unit_train = charging_per_second[:trainset_size]
+    charging_per_unit_test = charging_per_second[trainset_size:]
     assert len(charging_per_unit_train)+len(charging_per_unit_test) == len(ev_data)
     charging_per_unit_groups_train = np.array_split(charging_per_unit_train, N)
     charging_per_unit_groups_test = np.array_split(charging_per_unit_test, N)

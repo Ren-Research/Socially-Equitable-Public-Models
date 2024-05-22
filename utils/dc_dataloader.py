@@ -115,7 +115,6 @@ def load_direct_WUE(weather_path, wCycle=6):
     #
     df = pd.read_csv(weather_path)
     df_temper = df[['valid', 'tmpf', 'dwpf', 'wbtmp']]
-    # df_temper = df_temper
 
     dryBulbTemp = np.array(df_temper["tmpf"].values, dtype=np.double)
     wetBulbTemp = np.array(df_temper["wbtmp"].values, dtype=np.double)
@@ -134,7 +133,6 @@ def read_data():
     dc_loc = loc_name.split("_")[1]
     carbon_curve = load_carbon(fuel_mix_path, dc_loc)
     data = carbon_curve.reshape(-1, 1)
-    # scaler = MinMaxScaler(feature_range=(0, 1))
     scaler = MinMaxScaler(feature_range=(0, 10))
     normed_data = scaler.fit_transform(data)
     return normed_data

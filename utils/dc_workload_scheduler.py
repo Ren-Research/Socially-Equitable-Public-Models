@@ -9,7 +9,6 @@ from scipy.stats import wasserstein_distance
 def calculate_resource(demand_list, predicted_carbon, lbda):
     res_list=[]
     cost_list =[]
-    count=0
     for i in range(len(demand_list)):
         tmp = math.sqrt(lbda*demand_list[i]/predicted_carbon[i])
         res = demand_list[i]+tmp
@@ -18,11 +17,8 @@ def calculate_resource(demand_list, predicted_carbon, lbda):
             cost = res*predicted_carbon[i]
         else:
             cost = res*predicted_carbon[i] + lbda*demand_list[i]/(res-demand_list[i])
-
-        if torch.isnan(cost):
-            count = count+1
         cost_list.append(cost)
-    # print("count: ", count)
+
     return res_list, cost_list
 
 def calculate_cost_in_cuda(demand_list, action, carbon, lbda):

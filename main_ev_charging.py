@@ -15,8 +15,8 @@ from utils.dc_dataloader import load_carbon, load_indirect_WUE, load_direct_WUE
 def read_data_water():
     loc_name_list = ["4S2_Oregan_NW", "HND_Nevada_CAL", "JYO_virginia_PJM", "JWY_Texas_ERCO"]
     loc_name = loc_name_list[1]
-    fuel_mix_path = "../data/fuelmix/{}_year_2022.csv".format(loc_name.split("_")[-1])
-    weather_path = "../data/weather/{}.csv".format(loc_name)
+    fuel_mix_path = "./data/fuelmix/{}_year_2022.csv".format(loc_name.split("_")[-1])
+    weather_path = "./data/weather/{}.csv".format(loc_name)
     dc_loc = loc_name.split("_")[1]
 
     indirectWue = load_indirect_WUE(fuel_mix_path, dc_loc) * 1.1
@@ -30,7 +30,7 @@ def read_data_water():
     return normed_data
 
 def read_data_elec_price():
-    elec_prices = pd.read_csv("../data/elec_prices_hrly.csv")
+    elec_prices = pd.read_csv("./data/elec_prices_hrly.csv")
     filtered_rows = elec_prices[(elec_prices['hasp_price_per_mwh'] > 10) & (elec_prices['hasp_price_per_mwh'] < 100)]
     prices = np.array(filtered_rows['hasp_price_per_mwh']).reshape(-1, 1)
     scaler = MinMaxScaler(feature_range=(0, 10))
@@ -41,7 +41,7 @@ def read_data_carbon():
     # carbon data
     loc_name_list = ["4S2_Oregan_NW", "HND_Nevada_CAL", "JYO_virginia_PJM", "JWY_Texas_ERCO"]
     loc_name = loc_name_list[1]
-    fuel_mix_path = "../data/fuelmix/{}_year_2022.csv".format(loc_name.split("_")[-1])
+    fuel_mix_path = "./data/fuelmix/{}_year_2022.csv".format(loc_name.split("_")[-1])
     dc_loc = loc_name.split("_")[1]
     carbon_curve = load_carbon(fuel_mix_path, dc_loc)
     data = carbon_curve.reshape(-1, 1)
@@ -207,14 +207,14 @@ if __name__ == '__main__':
     train_loader = DataLoader(train_dataset, batch_size=Batch_Size, shuffle=False)
 
     # preprocess ev_data
-    total_ev_data = pd.read_csv("../data/caltech_ev_dataset_detail.csv")
+    total_ev_data = pd.read_csv("./data/caltech_ev_dataset_detail.csv")
     candidate_ev_data = preprocess_ev_charging_data(total_ev_data)
     dataset_size = min(len(cwp_data), len(total_ev_data))
     candidate_ev_data = candidate_ev_data[:dataset_size]
 
     if args.diff_group_dist:
-        sub_groups_demand_train, sub_groups_demand_test = np.load('ev_demands_sub_groups_train_dist.npy', allow_pickle=True), \
-                                                      np.load('ev_demands_sub_groups_test_dist.npy', allow_pickle=True)
+        sub_groups_demand_train, sub_groups_demand_test = np.load('./data/ev_demands_sub_groups_train_dist.npy', allow_pickle=True), \
+                                                      np.load('./data/ev_demands_sub_groups_test_dist.npy', allow_pickle=True)
     else:
         sub_groups_demand_train, sub_groups_demand_test = read_demand_data(candidate_ev_data, N, trainset_size)
 
@@ -229,7 +229,7 @@ if __name__ == '__main__':
         assert len(sub_groups_charging_per_sec_test[n]) == len(sub_groups_demand_test[n])
 
     # get charging time windows
-    charging_time_window = pd.read_csv("../data/trippub.csv")
+    charging_time_window = pd.read_csv("./data/trippub.csv")
     time_window, _ = get_charging_time_window(charging_time_window)
 
     model = TransAm().double().to('cuda')
