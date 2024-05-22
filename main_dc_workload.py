@@ -110,9 +110,9 @@ if __name__ == '__main__':
     train_dataset = TensorDataset(train_X, train_y)
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
 
+    # start training
     model = LSTM().double().to('cuda')
 
-    print(args.training)
     if args.training:
         print("---Start Training---\n")
         model.train()
@@ -140,7 +140,7 @@ if __name__ == '__main__':
                 loss.backward(retain_graph=True)
                 optimizer.step()
 
-            if epoch % 5 == 0:
+            if epoch % 10 == 0:
                 if args.baseline:
                     print(f'Iter: {epoch}, MSE Loss: {loss.item()}')
                 else:
@@ -150,6 +150,7 @@ if __name__ == '__main__':
     # path = "./trained_models/my_model.pth"
     # torch.save(model.state_dict(), path)
 
+    # start testing
     print("---Start Evaluation---\n")
     model.eval()
     true_cost_list_groups = []

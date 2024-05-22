@@ -1,4 +1,3 @@
-
 import torch
 import torch.nn as nn
 import pandas as pd
@@ -38,7 +37,6 @@ def read_data_elec_price():
     return normed_data
 
 def read_data_carbon():
-    # carbon data
     loc_name_list = ["4S2_Oregan_NW", "HND_Nevada_CAL", "JYO_virginia_PJM", "JWY_Texas_ERCO"]
     loc_name = loc_name_list[1]
     fuel_mix_path = "./data/fuelmix/{}_year_2022.csv".format(loc_name.split("_")[-1])
@@ -48,7 +46,6 @@ def read_data_carbon():
     scaler = MinMaxScaler(feature_range=(0, 10))
     normed_data = scaler.fit_transform(data)
     return normed_data
-
 
 def split_train_test(data, train_ratio):
     train_size = int(len(data) * train_ratio)
@@ -94,7 +91,6 @@ def calculate_mean(cost_list):
 
     return normalized_array, array
 
-
 def calculate_K(demands, charge_per_seconds, bound = 12):
     demands = demands.tolist()
     k_list = [int(demands[i]/(charge_per_seconds[i]*3600)) for i in range(len(demands))]
@@ -133,8 +129,6 @@ def cost_group_loss(output, labels, charge_per_seconds, demands, q, time_window)
     losses = torch.stack([(t1 - t2) for t1, t2 in zip(pred_costs, true_costs)])
     loss = torch.pow(torch.mean(losses, dim=0), q)
 
-    if torch.isnan(loss):
-        print(pred_cost, true_cost)
     return loss
 
 def combine_water_and_carbon_and_price(carbon, water, price, gamma, eta):
@@ -155,7 +149,6 @@ def preprocess_ev_charging_data(total_ev_data):
 def calculate_cost_in_cuda(demands, charge_per_seconds, time_window, cwp):
     k_list = calculate_K(demands, charge_per_seconds, bound=time_window[0])
     cwp[cwp <= 0] = 0.01
-
     costs = []
     for i in range(0, len(cwp)):
         action, _ = torch.topk(cwp[i], k_list[i], dim=0, largest=False)
@@ -166,7 +159,6 @@ def calculate_cost_in_cuda(demands, charge_per_seconds, time_window, cwp):
 
 def get_cwp_from_PM(test_data):
     test_X, test_y = create_sequences(test_data, seq_length, num_time_steps_to_predict)
-
     test_y[test_y <= 0] = 0.01
     test_X = torch.from_numpy(test_X)
     test_y = torch.from_numpy(test_y)
@@ -188,7 +180,6 @@ if __name__ == '__main__':
     N = 70
     trainset_ratio = 0.7
 
-    # writer = SummaryWriter('logs')
     carbon_data = read_data_carbon()
     water_data = read_data_water()
     price_data = read_data_elec_price()
@@ -206,7 +197,7 @@ if __name__ == '__main__':
     train_dataset = TensorDataset(train_X, train_y)
     train_loader = DataLoader(train_dataset, batch_size=Batch_Size, shuffle=False)
 
-    # preprocess ev_data
+    # process ev_data
     total_ev_data = pd.read_csv("./data/caltech_ev_dataset_detail.csv")
     candidate_ev_data = preprocess_ev_charging_data(total_ev_data)
     dataset_size = min(len(cwp_data), len(total_ev_data))
@@ -237,6 +228,7 @@ if __name__ == '__main__':
     baseline = args.baseline
     beta = 0.0
 
+    # start training
     if args.training:
         model.train()
         optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
@@ -268,7 +260,7 @@ if __name__ == '__main__':
                 optimizer.step()
                 scheduler.step()
 
-            if epoch % 5 == 0:
+            if epoch % 10 == 0:
                 if args.baseline:
                     print(f'Iter: {epoch}, MSE Loss: {loss.item()}')
                 else:
@@ -278,6 +270,7 @@ if __name__ == '__main__':
     # path = "./trained_models/my_model.pth"
     # torch.save(model.state_dict(), path)
 
+    # start testing
     print("---Start Evaluation---")
     true_cost_list_groups = []
     pred_cost_list_groups = []
