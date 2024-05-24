@@ -79,7 +79,6 @@ def load_demand(demand_path):
     grouped_df = preprocess_workload(demand_path)
     demand_values = grouped_df.iloc[6:2891] # testset size
     demand_list = demand_values[0].values
-    # print('test, demand length', len(demand_list))
 
     return demand_list
 

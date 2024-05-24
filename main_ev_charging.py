@@ -157,7 +157,7 @@ def calculate_cost_in_cuda(demands, charge_per_seconds, time_window, cwp):
 
     return costs
 
-def get_cwp_from_PM(test_data):
+def get_cwp_from_PM(test_data, model, seq_length, num_time_steps_to_predict):
     test_X, test_y = create_sequences(test_data, seq_length, num_time_steps_to_predict)
     test_y[test_y <= 0] = 0.01
     test_X = torch.from_numpy(test_X)
@@ -278,7 +278,7 @@ if __name__ == '__main__':
 
     mse_list = []
     model.eval()
-    inf_cwp_pred, inf_cwp_true, mse_metric = get_cwp_from_PM(cwp_data_test)
+    inf_cwp_pred, inf_cwp_true, mse_metric = get_cwp_from_PM(cwp_data_test, model, seq_length, num_time_steps_to_predict)
 
     for n in range(0, N):
         test_demands = sub_groups_demand_test[n]

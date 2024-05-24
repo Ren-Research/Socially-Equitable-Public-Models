@@ -40,7 +40,7 @@ def test(test_X, test_y, model):
 
     return [item for sublist in predicted for item in sublist]
 
-def get_carbon_from_PM(carbon_test_data):
+def get_carbon_from_PM(carbon_test_data, model, seq_length):
     test_X, test_y = create_sequences(carbon_test_data, seq_length)
 
     test_y[test_y <= 0] = 0.01
@@ -160,7 +160,7 @@ if __name__ == '__main__':
 
     mse_list = []
     model.eval()
-    inf_carbon_pred, inf_carbon_true, mse_metric = get_carbon_from_PM(carbon_test_data)
+    inf_carbon_pred, inf_carbon_true, mse_metric = get_carbon_from_PM(carbon_test_data, model, seq_length)
 
     wass_dist_min, wass_dist_max = cal_wass_distance(sub_groups_demand_test)
     print("Wass distance of demands between groups: [", wass_dist_min, ", ", wass_dist_max, "]") # [ 0.029343624115525817 ,  0.5800256778880332 ]
