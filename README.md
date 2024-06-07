@@ -6,10 +6,14 @@ This is the PyTorch implementation of our paper:
 
 __Building Socially-Equitable Public Models__<br>
 Yejia Liu, Jianyi Yang, Pengfei Li, Tongxin Li, Shaolei Ren<br>
-The Forty-first International Conference on Machine Learning (ICML 2024)
-<img src="system-fig.jpg" width="100%">
 
-[//]: # ([[arXiv]&#40;https://github.com/Ren-Research/Socially-Equitable-Public-Models&#41;][[GitHub]&#40;https://github.com/Ren-Research/Socially-Equitable-Public-Models&#41;])
+The Forty-first International Conference on Machine Learning (ICML 2024)
+
+[ [arXiv](https://arxiv.org/abs/2406.02790) ] [ [GitHub](https://github.com/Ren-Research/Socially-Equitable-Public-Models) ]
+
+
+
+<img src="system-fig.jpg" width="100%">
 
 ## Installation
 1. Create and activate a local conda environment:
