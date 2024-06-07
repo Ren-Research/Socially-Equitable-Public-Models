@@ -7,7 +7,7 @@ This is the PyTorch implementation of our paper:
 __Building Socially-Equitable Public Models__<br>
 Yejia Liu, Jianyi Yang, Pengfei Li, Tongxin Li, Shaolei Ren<br>
 The Forty-first International Conference on Machine Learning (ICML 2024)
-<img src="system-fig.pdf" width="100%">
+<img src="system-fig.jpg" width="100%">
 
 [//]: # ([[arXiv]&#40;https://github.com/Ren-Research/Socially-Equitable-Public-Models&#41;][[GitHub]&#40;https://github.com/Ren-Research/Socially-Equitable-Public-Models&#41;])
 
